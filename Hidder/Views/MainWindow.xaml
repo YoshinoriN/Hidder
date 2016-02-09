@@ -1,0 +1,350 @@
+﻿<Window x:Class="Hidder.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Hidder"
+        mc:Ignorable="d"
+        xmlns:Behavior="clr-namespace:Hidder.Behavior"
+        xmlns:ViewModels="clr-namespace:Hidder.ViewModels"
+        Height="400" Width="600"
+        WindowStartupLocation="Manual"
+        Background="Transparent"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        Topmost="True"
+        >
+
+    <!--DataContextにビューモデルを指定-->
+    <Window.DataContext>
+        <ViewModels:MainWindowViewModel/>
+    </Window.DataContext>
+
+    <!--ウインドウをメトロ風にする-->
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="{x:Static SystemParameters.CaptionHeight}"
+                      ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" 
+                      UseAeroCaptionButtons="False"/>
+    </WindowChrome.WindowChrome>
+
+    <!--ウインドウをメトロ風にする-->
+    <Border BorderThickness="1" Margin="10">
+        <Border.Effect>
+            <DropShadowEffect ShadowDepth="0" BlurRadius="20" Color="#000000" Opacity="1" />
+        </Border.Effect>
+
+        <Grid Margin="5,5,5,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="90"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="23"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+
+            <!--ボタンとテキストボックスはTriggerを使用するために各画面で個別に継承させる-->
+            <Grid.Resources>
+                <Style BasedOn="{StaticResource ButtonStyle}" TargetType="Button"/>
+                <Style BasedOn="{StaticResource TextBoxStyle}" TargetType="TextBox"/>
+                <Style BasedOn="{StaticResource TextBlockStyle}" TargetType="TextBlock"/>
+            </Grid.Resources>
+
+            <!--メニュー-->
+            <Menu Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Margin="0,0,0,0" VerticalAlignment="Center" Padding="0,2,0,2">
+                <MenuItem x:Name="Settings" Header="Setting" Click="Settings_Click"/>
+                <MenuItem x:Name="About"  Header="About" Click="About_Click"/>
+            </Menu>
+
+            <!--タイトルと最小化・最大化ボタンの表示-->
+            <Grid Grid.Column="0" Grid.ColumnSpan="7" Grid.Row="0">
+                <TextBlock x:Name="title" Text="{Binding Title}" Margin="0,0,0,0"  
+                           Foreground="{StaticResource StandardForeGroundColor}"
+                           FontSize="14" FontFamily="Segoe UI"
+                           />
+                <StackPanel Grid.ColumnSpan="4" Orientation="Horizontal" Margin="0,0,10,0" HorizontalAlignment="Right"  VerticalAlignment="Top">
+                    <Button x:Name="Min" Margin="0,0,5,0"
+                            Content="0" Style="{DynamicResource CaptionButtonStyleKey}" FontSize="15"
+                            Click="Min_Click"/>
+                    <Button x:Name="Close" Margin="0,0,0,0"
+                            Content="r" Style="{DynamicResource CaptionButtonStyleKey}" FontSize="15"
+                            Click="Close_Click"/>
+                </StackPanel>
+            </Grid>
+
+            <!--実行するプログラムのパス-->
+            <TextBox Grid.Column="0" Grid.Row="2" Margin="0,5,5,0"
+                     Text="{Binding Path, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <i:Interaction.Behaviors>
+                    <Behavior:TextBoxBehavior PlaceHolderText="Please input path."/>
+                </i:Interaction.Behaviors>
+
+                <!--xaml側で表示非表示をコントロールする-->
+                <TextBox.Resources>
+                    <Style BasedOn="{StaticResource TextBoxStyle}" TargetType="TextBox">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ApplicationProcess.IsRunning}" Value="True">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ApplicationProcess.IsRunning}" Value="False">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+
+            <!--参照ボタン-->
+            <Button Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Margin="5,5,0,0" Content="Browse">
+                <!--xaml側で表示非表示をコントロールする-->
+                <Button.Resources>
+                    <Style BasedOn="{StaticResource ButtonStyle}" TargetType="Button">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ApplicationProcess.IsRunning}" Value="True">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ApplicationProcess.IsRunning}" Value="False">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Resources>
+            </Button>
+
+            <!--引数-->
+            <TextBox Grid.Column="0" Grid.Row="3" Margin="0,5,5,0"
+                     Text="{Binding Argument, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <i:Interaction.Behaviors>
+                    <Behavior:TextBoxBehavior PlaceHolderText="Please input Argument."/>
+                </i:Interaction.Behaviors>
+
+                <!--xaml側で表示非表示をコントロールする-->
+                <TextBox.Resources>
+                    <Style BasedOn="{StaticResource TextBoxStyle}" TargetType="TextBox">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ApplicationProcess.IsRunning}" Value="true">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ApplicationProcess.IsRunning}" Value="false">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+
+            <!--アプリケーションリスト-->
+            <DataGrid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" Margin="0,5,0,5"
+                      Height="Auto"
+                      HorizontalAlignment="Stretch"
+                      AutoGenerateColumns="False"
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                      ItemsSource="{Binding ApplicationProcesses}"
+                      >
+
+                <DataGrid.Columns>
+
+                    <!--ファイル名-->
+                    <DataGridTextColumn Header="FileName"
+                                        Binding="{Binding FileName}"/>
+                    <!--引数-->
+                    <DataGridTextColumn Header="Argument"
+                                        Binding="{Binding Argument}"/>
+                    <!--プロセスID-->
+                    <DataGridTextColumn Header="ProcessId"
+                                        Binding="{Binding ProcessId}"/>
+                    <!--現在のウインドウの状況-->
+                    <DataGridTextColumn Header="Window State"
+                                        Binding="{Binding CurrentWindowStyle}"/>
+                    <!--稼動状況-->
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="Status"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.HeaderTemplate>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Center" Padding="5,5,5,5" Width="80">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Style.Triggers>
+                                                <!--稼動時-->
+                                                <DataTrigger Binding="{Binding IsRunning}" Value="True">
+                                                    <Setter Property="Text" Value="Running"/>
+                                                    <Setter Property="Background" Value="DodgerBlue"/>
+                                                    <DataTrigger.EnterActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                                 From="0.5" To="1" RepeatBehavior="Forever"
+                                                                                 AutoReverse="True"/>
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </DataTrigger.EnterActions>
+                                                </DataTrigger>
+                                                <!--停止持-->
+                                                <DataTrigger Binding="{Binding IsRunning}" Value="False">
+                                                    <Setter Property="Text" Value="Stop"/>
+                                                    <Setter Property="Background" Value="Firebrick"/>
+                                                    <!--Hack:ここはPauseStoryBoardにしたい-->
+                                                    <DataTrigger.EnterActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                                 From="0.8" To="0.8" RepeatBehavior="Forever"
+                                                                                 AutoReverse="True"/>
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </DataTrigger.EnterActions>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <!--停止/再起動ボタン-->
+                    <DataGridTemplateColumn Header="Run/Kill">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Width="80">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsRunning}" Value="True">
+                                                    <Setter Property="Content" Value="Kill"/>
+                                                    <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=DataContext.KillCommand}"/>
+                                                    <Setter Property="CommandParameter" Value="{Binding Id}"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding IsRunning}" Value="False">
+                                                    <Setter Property="Content" Value="ReRun"/>
+                                                    <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=DataContext.ReRunCommand}"/>
+                                                    <Setter Property="CommandParameter" Value="{Binding Id}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <!--表示/非表示ボタン-->
+                    <DataGridTemplateColumn Header="Show/Hidden">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Width="80">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsRunning}" Value="True">
+                                                    <Setter Property="Content" Value="Show"/>
+                                                    <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=DataContext.ChangeVisibillityCommand}"/>
+                                                    <Setter Property="CommandParameter" Value="{Binding Id}"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding IsRunning}" Value="False">
+                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                    <Setter Property="Content" Value="Disable"/>
+                                                    <Setter Property="Background" Value="DarkGray"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <!--行削除ボタン-->
+                    <DataGridTemplateColumn Header="Remove">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Width="80">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsRunning}" Value="False">
+                                                    <Setter Property="Content" Value="Remove"/>
+                                                    <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=DataContext.RemoveCommand}"/>
+                                                    <Setter Property="CommandParameter" Value="{Binding Id}"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding IsRunning}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                    <Setter Property="Content" Value="Disable"/>
+                                                    <Setter Property="Background" Value="DarkGray"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <!--アプリケーションの実行-->
+            <Button Grid.Column="0" Grid.Row="5" Margin="5,5,5,0" HorizontalAlignment="Right"
+                    Content="Run"
+                    Command="{Binding RunCommand}">
+                <!--xaml側で表示非表示をコントロールする-->
+                <Button.Resources>
+                    <Style BasedOn="{StaticResource ButtonStyle}" TargetType="Button">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ApplicationProcess.IsRunning}" Value="True">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ApplicationProcess.IsRunning}" Value="False">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Resources>
+            </Button>
+
+            <!--アプリケーション表示非表示ボタン-->
+            <Button Grid.Column="1" Grid.Row="5" Margin="5,5,5,0"
+                    Content="{Binding ChangeVisibilityButtonContent}"
+                    Command="{Binding ChangeVisibillityCommand}">
+                <!--xaml側で表示非表示をコントロールする-->
+                <Button.Resources>
+                    <Style BasedOn="{StaticResource ButtonStyle}" TargetType="Button">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ApplicationProcess.IsRunning}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ApplicationProcess.IsRunning}" Value="False">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Resources>
+            </Button>
+
+            <!--終了ボタン-->
+            <Button Grid.Column="2" Grid.Row="5" Margin="5,5,0,0" Content="Exit" Click="Close_Click">
+                <!--xaml側で表示非表示をコントロールする-->
+                <Button.Resources>
+                    <Style BasedOn="{StaticResource ButtonStyle}" TargetType="Button">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ApplicationProcess.IsRunning}" Value="True">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ApplicationProcess.IsRunning}" Value="False">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </Grid>
+    </Border>
+</Window>
