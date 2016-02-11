@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hidder.Common;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -6,7 +7,7 @@ using System.Windows.Forms;
 
 namespace Hidder.Models
 {
-    public class ApplicationProcess : ViewModels.ViewModelsBase
+    public class ApplicationProcess : PropertyChangeNotification
     {
         [DllImport("user32.dll")]
         private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);

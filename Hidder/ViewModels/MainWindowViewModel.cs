@@ -1,13 +1,15 @@
 ﻿using Hidder.Command;
+using Hidder.Common;
 using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
 namespace Hidder.ViewModels
 {
-    public class MainWindowViewModel : ViewModelsBase
+    public class MainWindowViewModel : PropertyChangeNotification
     {
         //ファイル名とバージョン表示
         public string Title { get; private set; } = System.IO.Path.GetFileNameWithoutExtension(@System.Reflection.Assembly.GetExecutingAssembly().Location) + " " +
