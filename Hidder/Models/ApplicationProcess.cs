@@ -30,7 +30,7 @@ namespace Hidder.Models
             private set
             {
                 this._isRunning = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
@@ -44,7 +44,7 @@ namespace Hidder.Models
             private set
             {
                 this._currentWindowStyle = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 

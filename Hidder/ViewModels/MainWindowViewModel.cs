@@ -48,7 +48,7 @@ namespace Hidder.ViewModels
             set
             {
                 this._applicationProcesses = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
