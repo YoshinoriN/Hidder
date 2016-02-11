@@ -132,12 +132,9 @@ namespace Hidder.ViewModels
         {
             try
             {
-                //Fixme:正直ここ怪しいのでなおす。
-                var appProcess = this.ApplicationProcesses.Where(x => x.Id == id);
-
-                //Fixme:このforeach何とかならんのか？
-                foreach (Models.ApplicationProcess process in appProcess)
-                    this.ApplicationProcesses[process.Id].Start(this.ApplicationProcesses[process.Id].FullPath, this.ApplicationProcesses[process.Id].Argument);
+                var applicationProcess = this.ApplicationProcesses.Where(x => x.Id == id);
+                foreach (Models.ApplicationProcess appProcess in applicationProcess)
+                    appProcess.Start(appProcess.FullPath, appProcess.Argument);
             }
             catch (Exception ex)
             {
@@ -155,12 +152,8 @@ namespace Hidder.ViewModels
         {
             try
             {
-                //Fixme:正直ここ怪しいのでなおす。
-                var appProcess = this.ApplicationProcesses.Where(x => x.Id == id);
-
-                //Fixme:このforeach何とかならんのか？
-                foreach (Models.ApplicationProcess process in appProcess)
-                    this.ApplicationProcesses[process.Id].Kill();
+                var applicationProcess = this.ApplicationProcesses.Where(x => x.Id == id);
+                applicationProcess.ToList().ForEach(x => x.Kill());
             }
             catch (Exception ex)
             {
@@ -176,12 +169,8 @@ namespace Hidder.ViewModels
         /// </summary>
         private void ChangeVisibillity(int id)
         {
-            //Fixme:正直ここ怪しいのでなおす。
-            var appProcess = this.ApplicationProcesses.Where(x => x.Id == id);
-
-            //Fixme:このforeach何とかならんのか？
-            foreach (Models.ApplicationProcess process in appProcess)
-                this.ApplicationProcesses[process.Id].ChangeWindowState();
+            var applicationProcess = this.ApplicationProcesses.Where(x => x.Id == id);
+            applicationProcess.ToList().ForEach(x => x.ChangeWindowState());                
         }
 
         public ICommand RemoveCommand { get; private set; }
