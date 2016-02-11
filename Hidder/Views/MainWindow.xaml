@@ -80,18 +80,6 @@
                 <i:Interaction.Behaviors>
                     <Behavior:TextBoxBehavior PlaceHolderText="Please input path."/>
                 </i:Interaction.Behaviors>
-                <TextBox.Resources>
-                    <Style BasedOn="{StaticResource TextBoxStyle}" TargetType="TextBox">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding ApplicationProcess.IsRunning}" Value="True">
-                                <Setter Property="Visibility" Value="Hidden"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding ApplicationProcess.IsRunning}" Value="False">
-                                <Setter Property="Visibility" Value="Visible"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBox.Resources>
             </TextBox>
 
             <!--参照ボタン-->
@@ -103,18 +91,6 @@
                 <i:Interaction.Behaviors>
                     <Behavior:TextBoxBehavior PlaceHolderText="Please input Argument."/>
                 </i:Interaction.Behaviors>
-                <TextBox.Resources>
-                    <Style BasedOn="{StaticResource TextBoxStyle}" TargetType="TextBox">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding ApplicationProcess.IsRunning}" Value="true">
-                                <Setter Property="Visibility" Value="Hidden"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding ApplicationProcess.IsRunning}" Value="false">
-                                <Setter Property="Visibility" Value="Visible"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBox.Resources>
             </TextBox>
 
             <!--アプリケーションの追加-->
