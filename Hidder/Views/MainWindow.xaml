@@ -80,6 +80,17 @@
                 <i:Interaction.Behaviors>
                     <Behavior:TextBoxBehavior PlaceHolderText="Please input path."/>
                 </i:Interaction.Behaviors>
+                <!--パスが存在しない場合...正直Validationほにゃららのほうがよさそう-->
+                <TextBox.Resources>
+                    <Style BasedOn="{StaticResource TextBoxStyle}" TargetType="TextBox">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsExistsFilePath}" Value="False">
+                                <Setter Property="BorderBrush" Value="Red"/>
+                                <Setter Property="BorderThickness" Value="2.2"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Resources>
             </TextBox>
 
             <!--参照ボタン-->
@@ -96,7 +107,17 @@
             <!--アプリケーションの追加-->
             <Button Grid.Column="1" Grid.Row="3" Height="25"
                     Content="Add"
-                    Command="{Binding AddCommand}"/>
+                    Command="{Binding AddCommand}">
+                <Button.Resources>
+                    <Style BasedOn="{StaticResource ButtonStyle}" TargetType="Button">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsExistsFilePath}" Value="False">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Resources>
+            </Button>
 
             <!--アプリケーションリスト-->
             <DataGrid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" Margin="0,5,0,5"

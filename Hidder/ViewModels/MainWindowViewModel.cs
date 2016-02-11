@@ -25,6 +25,14 @@ namespace Hidder.ViewModels
             set
             {
                 this._path = value;
+                if(!string.IsNullOrWhiteSpace(value))
+                {
+                    this.IsExistsFilePath = System.IO.File.Exists(value);
+                }
+                else
+                {
+                    this.IsExistsFilePath = true;
+                }
                 this.OnPropertyChanged();
             }
         }
@@ -39,6 +47,22 @@ namespace Hidder.ViewModels
             set
             {
                 this._argument = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        private bool _isExistsFilePath = true;
+        /// <summary>
+        /// テキストボックスに入力したパスが存在するかどうか。
+        /// 空白の場合はtrueで扱う。
+        /// Hack:もっと別の手段が取れそうだけど、いろいろな組み合わせの問題があって...
+        /// </summary>
+        public bool IsExistsFilePath
+        {
+            get { return this._isExistsFilePath; }
+            private set
+            {
+                this._isExistsFilePath = value;
                 this.OnPropertyChanged();
             }
         }
