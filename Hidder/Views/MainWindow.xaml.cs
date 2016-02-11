@@ -22,11 +22,6 @@ namespace Hidder.Views
             this.WindowState = WindowState.Minimized;
         }
 
-        private void Close_Click(object sender, RoutedEventArgs e)
-        {
-            //this.WindowState = WindowState.Hidden;
-        }
-
         private void Settings_Click(object sender, RoutedEventArgs e)
         {
             //var settingsWindow = new Settings(this.Top, this.Left);

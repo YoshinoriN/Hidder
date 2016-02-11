@@ -61,7 +61,7 @@
                 <MenuItem x:Name="About"  Header="About" Click="About_Click"/>
             </Menu>
 
-            <!--タイトルと最小化・最大化ボタンの表示-->
+            <!--タイトルと最小化ボタン-->
             <Grid Grid.Column="0" Grid.ColumnSpan="7" Grid.Row="0">
                 <TextBlock x:Name="title" Text="{Binding Title}" Margin="0,0,0,0"  
                            Foreground="{StaticResource StandardForeGroundColor}"
@@ -71,9 +71,6 @@
                     <Button x:Name="Min" Margin="0,0,5,0"
                             Content="0" Style="{DynamicResource CaptionButtonStyleKey}" FontSize="15"
                             Click="Min_Click"/>
-                    <Button x:Name="Close" Margin="0,0,0,0"
-                            Content="r" Style="{DynamicResource CaptionButtonStyleKey}" FontSize="15"
-                            Click="Close_Click"/>
                 </StackPanel>
             </Grid>
 
@@ -116,14 +113,12 @@
                 </Button.Resources>
             </Button>
 
-            <!--引数-->
+            <!--引数入力-->
             <TextBox Grid.Column="0" Grid.Row="3" Margin="0,5,5,0"
                      Text="{Binding Argument, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <i:Interaction.Behaviors>
                     <Behavior:TextBoxBehavior PlaceHolderText="Please input Argument."/>
                 </i:Interaction.Behaviors>
-
-                <!--xaml側で表示非表示をコントロールする-->
                 <TextBox.Resources>
                     <Style BasedOn="{StaticResource TextBoxStyle}" TargetType="TextBox">
                         <Style.Triggers>
@@ -295,7 +290,6 @@
             <Button Grid.Column="0" Grid.Row="5" Margin="5,5,5,0" HorizontalAlignment="Right"
                     Content="Run"
                     Command="{Binding RunCommand}">
-                <!--xaml側で表示非表示をコントロールする-->
                 <Button.Resources>
                     <Style BasedOn="{StaticResource ButtonStyle}" TargetType="Button">
                         <Style.Triggers>
@@ -304,25 +298,6 @@
                             </DataTrigger>
                             <DataTrigger Binding="{Binding ApplicationProcess.IsRunning}" Value="False">
                                 <Setter Property="Visibility" Value="Visible"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Resources>
-            </Button>
-
-            <!--アプリケーション表示非表示ボタン-->
-            <Button Grid.Column="1" Grid.Row="5" Margin="5,5,5,0"
-                    Content="{Binding ChangeVisibilityButtonContent}"
-                    Command="{Binding ChangeVisibillityCommand}">
-                <!--xaml側で表示非表示をコントロールする-->
-                <Button.Resources>
-                    <Style BasedOn="{StaticResource ButtonStyle}" TargetType="Button">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding ApplicationProcess.IsRunning}" Value="True">
-                                <Setter Property="Visibility" Value="Visible"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding ApplicationProcess.IsRunning}" Value="False">
-                                <Setter Property="Visibility" Value="Hidden"/>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
@@ -331,7 +306,6 @@
 
             <!--終了ボタン-->
             <Button Grid.Column="2" Grid.Row="5" Margin="5,5,0,0" Content="Exit" Click="Close_Click">
-                <!--xaml側で表示非表示をコントロールする-->
                 <Button.Resources>
                     <Style BasedOn="{StaticResource ButtonStyle}" TargetType="Button">
                         <Style.Triggers>
