@@ -1,13 +1,7 @@
 ﻿using Hidder.Command;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 
 namespace Hidder.ViewModels
@@ -53,23 +47,7 @@ namespace Hidder.ViewModels
             set
             {
                 this._applicationProcesses = value;
-                //コレクション1つめ追加時に高さを広げる
-                if (this._height != this.Height)
-                {
-                    this.Height = 500;
-                }
                 OnPropertyChanged();
-            }
-        }
-
-        private double _height = 200;
-        public double Height
-        {
-            get { return this._height; }
-            set
-            {
-                this._height = value;
-                this.OnPropertyChanged();
             }
         }
 
@@ -85,23 +63,8 @@ namespace Hidder.ViewModels
             this.ChangeVisibillityCommand = new DelegateCommand<int>(ChangeVisibillity);
         }
 
-        private string _changeVisibilityButtonContent = "Hide";
-        /// <summary>
-        /// 実行アプリケーションの可視/不可視
-        /// </summary>
-        public string ChangeVisibilityButtonContent
-        {
-            get { return this._changeVisibilityButtonContent; }
-            set
-            {
-                this._changeVisibilityButtonContent = value;
-                this.OnPropertyChanged();
-            }
-        }
+        #region "Command関連"
 
-        /// <summary>
-        /// アプリケーション管理用ID
-        /// </summary>
         private int _id;
 
         public ICommand RunCommand { get; private set; }
@@ -114,8 +77,8 @@ namespace Hidder.ViewModels
             this.ApplicationProcesses.Add(new Models.ApplicationProcess(this._id));
             try
             {
-                this.ApplicationProcesses[_id].Start(this.Path, this.Argument);
-                _id++;
+                this.ApplicationProcesses[this.ApplicationProcesses.Count - 1].Start(this.Path, this.Argument);
+                this._id++;
             }
             catch (Exception ex)
             {
@@ -126,7 +89,7 @@ namespace Hidder.ViewModels
         public ICommand ReRunCommand { get; private set; }
 
         /// <summary>
-        /// Run(データグリッド)押下時
+        /// ReRun(データグリッド)押下時
         /// </summary>
         private void ReRun(int id)
         {
@@ -159,7 +122,6 @@ namespace Hidder.ViewModels
             {
                 System.Windows.MessageBox.Show((string)ex.Message + Environment.NewLine + ex.StackTrace);
             }
-
         }
 
         public ICommand ChangeVisibillityCommand { get; private set; }
@@ -176,21 +138,19 @@ namespace Hidder.ViewModels
         public ICommand RemoveCommand { get; private set; }
 
         /// <summary>
-        /// アプリケーションの可視/不可視を切り替える
+        /// DataGridに表示されている行を削除する。
         /// </summary>
         private void Remove(int id)
         {
-            //Fixme:正直ここ怪しいのでなおす。
             var appProcess = this.ApplicationProcesses.Where(x => x.Id == id);
-
             //Fixme:このforeach何とかならんのか？
             foreach (Models.ApplicationProcess process in appProcess)
             {
                 this.ApplicationProcesses.Remove(process);
                 return;
             }
-
         }
 
+        #endregion
     }
 }
