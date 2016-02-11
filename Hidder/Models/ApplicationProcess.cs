@@ -1,10 +1,8 @@
-﻿using Hidder.Command;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using System.Windows.Input;
 
 namespace Hidder.Models
 {
