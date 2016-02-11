@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         xmlns:Behavior="clr-namespace:Hidder.Behavior"
         xmlns:ViewModels="clr-namespace:Hidder.ViewModels"
-        Height="400" Width="600"
+        Height="{Binding Height, Mode=TwoWay}" Width="600"
         WindowStartupLocation="Manual"
         Background="Transparent"
         AllowsTransparency="True"

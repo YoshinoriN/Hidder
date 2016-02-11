@@ -15,6 +15,20 @@ namespace Hidder.ViewModels
         public string Title { get; private set; } = System.IO.Path.GetFileNameWithoutExtension(@System.Reflection.Assembly.GetExecutingAssembly().Location) + " " +
             System.Diagnostics.FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).ProductVersion.ToString();
 
+        private double _height = 200;
+        /// <summary>
+        /// ウィンドウの高さ
+        /// </summary>
+        public double Height
+        {
+            get { return this._height; }
+            set
+            {
+                this._height = value;
+                this.OnPropertyChanged();
+            }
+        }
+
         private string _path;
         /// <summary>
         /// 実行アプリケーションのパス
@@ -104,6 +118,7 @@ namespace Hidder.ViewModels
         private void Add()
         {
             this.ApplicationProcesses.Add(new Models.ApplicationProcess(this._id, this.Path, this.Argument));
+            this.Height = 500;
             _id++;
         }
 
@@ -167,6 +182,11 @@ namespace Hidder.ViewModels
             foreach (Models.ApplicationProcess process in appProcess)
             {
                 this.ApplicationProcesses.Remove(process);
+
+                if(this.ApplicationProcesses.Count == 0)
+                {
+                    this.Height = 200;
+                }
                 return;
             }
         }
