@@ -101,9 +101,11 @@ namespace Hidder.Models
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public ApplicationProcess(int id)
+        public ApplicationProcess(int id, string path, string argument)
         {
             this.Id = id;
+            this.FullPath = path;
+            this.Argument = argument;
         }
 
         /// <summary>

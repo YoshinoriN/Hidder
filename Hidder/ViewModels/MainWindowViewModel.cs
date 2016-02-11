@@ -2,6 +2,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Hidder.ViewModels
@@ -56,48 +57,41 @@ namespace Hidder.ViewModels
         /// </summary>
         public MainWindowViewModel()
         {
-            this.RunCommand = new DelegateCommand(Run);
-            this.ReRunCommand = new DelegateCommand<int>(ReRun);
+            this.AddCommand = new DelegateCommand(Add);
+            this.RunCommand = new DelegateCommand<int>(Run);
             this.KillCommand = new DelegateCommand<int>(Kill);
             this.RemoveCommand = new DelegateCommand<int>(Remove);
             this.ChangeVisibillityCommand = new DelegateCommand<int>(ChangeVisibillity);
+            this.HideAllCommand = new DelegateCommand(HideAll);
+            this.ExitCommand = new DelegateCommand(Exit);
         }
 
         #region "Command関連"
 
         private int _id;
 
+        public ICommand AddCommand { get; private set; }
+
+        /// <summary>
+        /// アプリケーションの追加
+        /// </summary>
+        private void Add()
+        {
+            this.ApplicationProcesses.Add(new Models.ApplicationProcess(this._id, this.Path, this.Argument));
+            _id++;
+        }
+
         public ICommand RunCommand { get; private set; }
 
         /// <summary>
-        /// Run(否データグリッド)押下時
+        /// アプリケーションの実行
         /// </summary>
-        private void Run()
-        {
-            this.ApplicationProcesses.Add(new Models.ApplicationProcess(this._id));
-            try
-            {
-                this.ApplicationProcesses[this.ApplicationProcesses.Count - 1].Start(this.Path, this.Argument);
-                this._id++;
-            }
-            catch (Exception ex)
-            {
-                System.Windows.MessageBox.Show((string)ex.Message + Environment.NewLine + ex.StackTrace);
-            }
-        }
-
-        public ICommand ReRunCommand { get; private set; }
-
-        /// <summary>
-        /// ReRun(データグリッド)押下時
-        /// </summary>
-        private void ReRun(int id)
+        private void Run(int id)
         {
             try
             {
                 var applicationProcess = this.ApplicationProcesses.Where(x => x.Id == id);
-                foreach (Models.ApplicationProcess appProcess in applicationProcess)
-                    appProcess.Start(appProcess.FullPath, appProcess.Argument);
+                applicationProcess.ToList().ForEach(x => x.Start(x.FullPath, x.Argument));
             }
             catch (Exception ex)
             {
@@ -149,6 +143,37 @@ namespace Hidder.ViewModels
                 this.ApplicationProcesses.Remove(process);
                 return;
             }
+        }
+
+        public Action HideThis { get; set; }
+
+        public ICommand HideAllCommand { get; private set; }
+
+        /// <summary>
+        /// 本アプリケーションを含めた全てのアプリケーションを非表示にする。
+        /// </summary>
+        private void HideAll()
+        {
+
+        }
+
+        //View側からWindowのExitメソッドを登録する。
+        public Action ExitThis { get; set; }
+
+        public ICommand ExitCommand { get; private set; }
+
+        /// <summary>
+        /// 本アプリケーションの終了
+        /// </summary>
+        private void Exit()
+        {
+            var isExistsRunningApplication = this.ApplicationProcesses.Any(x => x.CurrentWindowStyle == System.Diagnostics.ProcessWindowStyle.Hidden);
+            if(isExistsRunningApplication)
+            {
+                MessageBox.Show("Please exit all runnning applications or show all window, if some runnning application are hidden.");
+                return;
+            }
+            this.ExitThis();
         }
 
         #endregion

@@ -13,6 +13,14 @@ namespace Hidder.Views
 
             //ウインドウ全体でドラッグ可能にする。
             this.MouseLeftButtonDown += (sender, e) => this.DragMove();
+
+            //ビューモデルにこの画面のCloseイベントとHiddenを登録する。
+            ViewModels.MainWindowViewModel _viewModel;
+            _viewModel = DataContext as ViewModels.MainWindowViewModel;
+            _viewModel.ExitThis = Close;
+
+            //DataContextを差し替える。
+            this.DataContext = _viewModel;
         }
 
         //以下はすべてめんどくさいのでコードビハインドでやる。

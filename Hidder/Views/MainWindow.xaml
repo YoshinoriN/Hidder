@@ -80,8 +80,6 @@
                 <i:Interaction.Behaviors>
                     <Behavior:TextBoxBehavior PlaceHolderText="Please input path."/>
                 </i:Interaction.Behaviors>
-
-                <!--xaml側で表示非表示をコントロールする-->
                 <TextBox.Resources>
                     <Style BasedOn="{StaticResource TextBoxStyle}" TargetType="TextBox">
                         <Style.Triggers>
@@ -97,21 +95,7 @@
             </TextBox>
 
             <!--参照ボタン-->
-            <Button Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Margin="5,5,0,0" Content="Browse">
-                <!--xaml側で表示非表示をコントロールする-->
-                <Button.Resources>
-                    <Style BasedOn="{StaticResource ButtonStyle}" TargetType="Button">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding ApplicationProcess.IsRunning}" Value="True">
-                                <Setter Property="Visibility" Value="Hidden"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding ApplicationProcess.IsRunning}" Value="False">
-                                <Setter Property="Visibility" Value="Visible"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Resources>
-            </Button>
+            <Button Grid.Column="1" Grid.Row="2" Content="Browse" Height="25"/>
 
             <!--引数入力-->
             <TextBox Grid.Column="0" Grid.Row="3" Margin="0,5,5,0"
@@ -133,6 +117,11 @@
                 </TextBox.Resources>
             </TextBox>
 
+            <!--アプリケーションの追加-->
+            <Button Grid.Column="1" Grid.Row="3" Height="25"
+                    Content="Add"
+                    Command="{Binding AddCommand}"/>
+
             <!--アプリケーションリスト-->
             <DataGrid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" Margin="0,5,0,5"
                       Height="Auto"
@@ -141,7 +130,6 @@
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                       ItemsSource="{Binding ApplicationProcesses}"
                       >
-
                 <DataGrid.Columns>
 
                     <!--ファイル名-->
@@ -220,8 +208,8 @@
                                                     <Setter Property="CommandParameter" Value="{Binding Id}"/>
                                                 </DataTrigger>
                                                 <DataTrigger Binding="{Binding IsRunning}" Value="False">
-                                                    <Setter Property="Content" Value="ReRun"/>
-                                                    <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=DataContext.ReRunCommand}"/>
+                                                    <Setter Property="Content" Value="Run"/>
+                                                    <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=DataContext.RunCommand}"/>
                                                     <Setter Property="CommandParameter" Value="{Binding Id}"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
@@ -286,39 +274,16 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <!--アプリケーションの実行-->
-            <Button Grid.Column="0" Grid.Row="5" Margin="5,5,5,0" HorizontalAlignment="Right"
-                    Content="Run"
-                    Command="{Binding RunCommand}">
-                <Button.Resources>
-                    <Style BasedOn="{StaticResource ButtonStyle}" TargetType="Button">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding ApplicationProcess.IsRunning}" Value="True">
-                                <Setter Property="Visibility" Value="Hidden"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding ApplicationProcess.IsRunning}" Value="False">
-                                <Setter Property="Visibility" Value="Visible"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Resources>
-            </Button>
+            <!--本アプリケーションも含めた全てのアプリケーションを非表示-->
+            <Button Grid.Column="0" Grid.Row="5" Margin="5,5,0,0" HorizontalAlignment="Right" Content="Hide All"
+                    Command="{Binding HideAllCommand}"
+                    />
 
             <!--終了ボタン-->
-            <Button Grid.Column="2" Grid.Row="5" Margin="5,5,0,0" Content="Exit" Click="Close_Click">
-                <Button.Resources>
-                    <Style BasedOn="{StaticResource ButtonStyle}" TargetType="Button">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding ApplicationProcess.IsRunning}" Value="True">
-                                <Setter Property="Visibility" Value="Hidden"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding ApplicationProcess.IsRunning}" Value="False">
-                                <Setter Property="Visibility" Value="Visible"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Resources>
-            </Button>
+            <Button Grid.Column="1" Grid.Row="5" Margin="5,5,0,0" Content="Exit"
+                    Command="{Binding ExitCommand}"
+                    />
+
         </Grid>
     </Border>
 </Window>
