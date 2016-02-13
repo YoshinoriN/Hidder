@@ -128,19 +128,14 @@ namespace Hidder.Models
         }
 
         /// <summary>
-        /// 起動中アプリケーションのウインドウサイズを変更します。
-        /// Fixme:とりあえず、HiddenとNormalだけ
+        /// 起動中アプリケーションのウインドウを非表示にします。
         /// </summary>
-        public void ChangeWindowState()
+        public void Hide()
         {
             if (this.CurrentWindowStyle != ProcessWindowStyle.Hidden)
             {
-                ShowWindow(_process.MainWindowHandle, 1);
-                this.CurrentWindowStyle = ProcessWindowStyle.Hidden;
-                return;
+                this.CurrentWindowStyle = WindowStyleChange.Hide(this._process);
             }
-            ShowWindow(_process.MainWindowHandle, 0);
-            this.CurrentWindowStyle = ProcessWindowStyle.Normal;
         }
 
         /// <summary>

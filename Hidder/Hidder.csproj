@@ -75,6 +75,7 @@
     </Compile>
     <Compile Include="Behavior\TextBoxBehavior.cs" />
     <Compile Include="Command\DelegateCommand.cs" />
+    <Compile Include="Common\WindowStyleChange.cs" />
     <Compile Include="Models\ApplicationProcess.cs" />
     <Compile Include="Models\RunningStatusEnum.cs" />
     <Compile Include="NotifyIcon\NotifyIconWrapper.cs">
