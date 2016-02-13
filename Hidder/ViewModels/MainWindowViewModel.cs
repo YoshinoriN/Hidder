@@ -39,7 +39,7 @@ namespace Hidder.ViewModels
             set
             {
                 this._path = value;
-                if(!string.IsNullOrWhiteSpace(value))
+                if (!string.IsNullOrWhiteSpace(value))
                 {
                     this.IsExistsFilePath = System.IO.File.Exists(value);
                 }
@@ -129,15 +129,8 @@ namespace Hidder.ViewModels
         /// </summary>
         private void Run(int id)
         {
-            try
-            {
-                var applicationProcess = this.ApplicationProcesses.Where(x => x.Id == id);
-                applicationProcess.ToList().ForEach(x => x.Start(x.FullPath, x.Argument));
-            }
-            catch (Exception ex)
-            {
-                System.Windows.MessageBox.Show((string)ex.Message + Environment.NewLine + ex.StackTrace);
-            }
+            var applicationProcess = this.ApplicationProcesses.Where(x => x.Id == id);
+            applicationProcess.ToList().ForEach(x => x.Start(x.FullPath, x.Argument));
         }
 
         public ICommand KillCommand { get; private set; }
@@ -148,15 +141,8 @@ namespace Hidder.ViewModels
         /// <param name="id"></param>
         private void Kill(int id)
         {
-            try
-            {
-                var applicationProcess = this.ApplicationProcesses.Where(x => x.Id == id);
-                applicationProcess.ToList().ForEach(x => x.Kill());
-            }
-            catch (Exception ex)
-            {
-                System.Windows.MessageBox.Show((string)ex.Message + Environment.NewLine + ex.StackTrace);
-            }
+            var applicationProcess = this.ApplicationProcesses.Where(x => x.Id == id);
+            applicationProcess.ToList().ForEach(x => x.Kill());
         }
 
         public ICommand ChangeVisibillityCommand { get; private set; }
@@ -167,7 +153,17 @@ namespace Hidder.ViewModels
         private void ChangeVisibillity(int id)
         {
             var applicationProcess = this.ApplicationProcesses.Where(x => x.Id == id);
-            applicationProcess.ToList().ForEach(x => x.ChangeWindowState());                
+            foreach (Models.ApplicationProcess appProcess in applicationProcess)
+            {
+                if (appProcess.CurrentWindowStyle == System.Diagnostics.ProcessWindowStyle.Hidden)
+                {
+                    appProcess.Show();
+                }
+                else
+                {
+                    appProcess.Hide();
+                }
+            }
         }
 
         public ICommand RemoveCommand { get; private set; }
@@ -183,7 +179,7 @@ namespace Hidder.ViewModels
             {
                 this.ApplicationProcesses.Remove(process);
 
-                if(this.ApplicationProcesses.Count == 0)
+                if (this.ApplicationProcesses.Count == 0)
                 {
                     this.Height = 200;
                 }
@@ -218,7 +214,7 @@ namespace Hidder.ViewModels
         private void Exit()
         {
             var isExistsRunningApplication = this.ApplicationProcesses.Any(x => x.CurrentWindowStyle == System.Diagnostics.ProcessWindowStyle.Hidden);
-            if(isExistsRunningApplication)
+            if (isExistsRunningApplication)
             {
                 MessageBox.Show("Please exit all runnning applications or show all window, if some runnning application are hidden.");
                 return;

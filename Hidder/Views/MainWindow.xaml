@@ -331,12 +331,12 @@
             </DataGrid>
 
             <!--本アプリケーションも含めた全てのアプリケーションを非表示-->
-            <Button Grid.Column="0" Grid.Row="5" Margin="5,5,0,0" HorizontalAlignment="Right" Content="Hide All"
+            <Button Grid.Column="0" Grid.Row="5" Margin="5,5,5,0" HorizontalAlignment="Right" Content="Hide All"
                     Command="{Binding HideAllCommand}"
                     />
 
             <!--終了ボタン-->
-            <Button Grid.Column="1" Grid.Row="5" Margin="5,5,0,0" Content="Exit"
+            <Button Grid.Column="1" Grid.Row="5" Margin="5,5,5,0" Content="Exit"
                     Command="{Binding ExitCommand}"
                     />
 
