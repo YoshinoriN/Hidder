@@ -9,9 +9,6 @@ namespace Hidder.Models
 {
     public class ApplicationProcess : PropertyChangeNotification
     {
-        [DllImport("user32.dll")]
-        private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
-
         private System.Diagnostics.Process _process;
 
         /// <summary>
@@ -67,8 +64,6 @@ namespace Hidder.Models
             }
         }
 
-        //以下、実行後変わらないはずなので、変更通知しない。
-
         private string _processId = "-";
         /// <summary>
         /// プロセスID
@@ -83,37 +78,21 @@ namespace Hidder.Models
             }
         }
 
-        private string _fullPath;
         /// <summary>
         /// パス
         /// </summary>
-        public string FullPath
-        {
-            get { return this._fullPath; }
-            private set
-            {
-                this._fullPath = value;
-            }
-        }
+        public string FullPath { get; private set; }
 
         /// <summary>
         /// ファイル名
         /// </summary>
         public string FileName { get { return Path.GetFileName(this.FullPath); } }
 
-
-        private string _argument;
         /// <summary>
         /// 引数
         /// </summary>
-        public string Argument
-        {
-            get { return this._argument; }
-            private set
-            {
-                this._argument = value;
-            }
-        }
+        public string Argument { get; private set; }
+
 
         #endregion
 
