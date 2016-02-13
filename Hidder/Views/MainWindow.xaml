@@ -124,7 +124,6 @@
                       Height="Auto"
                       HorizontalAlignment="Stretch"
                       AutoGenerateColumns="False"
-                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                       ItemsSource="{Binding ApplicationProcesses}"
                       >
                 <DataGrid.Columns>
