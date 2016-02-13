@@ -153,8 +153,36 @@
                                     <TextBlock.Style>
                                         <Style TargetType="TextBlock">
                                             <Style.Triggers>
-                                                <!--稼動時-->
-                                                <DataTrigger Binding="{Binding IsRunning}" Value="True">
+                                                <!--待機-->
+                                                <DataTrigger Binding="{Binding ApplicationStatus}" Value="Ready">
+                                                    <Setter Property="Text" Value="Ready"/>
+                                                    <Setter Property="Background" Value="DarkGreen"/>
+                                                    <DataTrigger.EnterActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                                 From="1" To="1" RepeatBehavior="Forever"
+                                                                                 AutoReverse="True"/>
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </DataTrigger.EnterActions>
+                                                </DataTrigger>
+                                                <!--開始中-->
+                                                <DataTrigger Binding="{Binding ApplicationStatus}" Value="Starting">
+                                                    <Setter Property="Text" Value="Starting"/>
+                                                    <Setter Property="Background" Value="Orange"/>
+                                                    <DataTrigger.EnterActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                                 From="0.5" To="1" RepeatBehavior="Forever"
+                                                                                 AutoReverse="True"/>
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </DataTrigger.EnterActions>
+                                                </DataTrigger>
+                                                <!--稼動中-->
+                                                <DataTrigger Binding="{Binding ApplicationStatus}" Value="Running">
                                                     <Setter Property="Text" Value="Running"/>
                                                     <Setter Property="Background" Value="DodgerBlue"/>
                                                     <DataTrigger.EnterActions>
@@ -167,16 +195,43 @@
                                                         </BeginStoryboard>
                                                     </DataTrigger.EnterActions>
                                                 </DataTrigger>
-                                                <!--停止持-->
-                                                <DataTrigger Binding="{Binding IsRunning}" Value="False">
-                                                    <Setter Property="Text" Value="Stop"/>
-                                                    <Setter Property="Background" Value="Firebrick"/>
-                                                    <!--Hack:ここはPauseStoryBoardにしたい-->
+                                                <!--停止中-->
+                                                <DataTrigger Binding="{Binding ApplicationStatus}" Value="Stopping">
+                                                    <Setter Property="Text" Value="Stopping"/>
+                                                    <Setter Property="Background" Value="Orange"/>
                                                     <DataTrigger.EnterActions>
                                                         <BeginStoryboard>
                                                             <Storyboard>
                                                                 <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                                                                 From="0.8" To="0.8" RepeatBehavior="Forever"
+                                                                                 From="0.5" To="1" RepeatBehavior="Forever"
+                                                                                 AutoReverse="True"/>
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </DataTrigger.EnterActions>
+                                                </DataTrigger>
+                                                <!--存在せず-->
+                                                <DataTrigger Binding="{Binding ApplicationStatus}" Value="DoesntExist">
+                                                    <Setter Property="Text" Value="Doesn'tExist"/>
+                                                    <Setter Property="Background" Value="Firebrick"/>
+                                                    <DataTrigger.EnterActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                                 From="1" To="1" RepeatBehavior="Forever"
+                                                                                 AutoReverse="True"/>
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </DataTrigger.EnterActions>
+                                                </DataTrigger>
+                                                <!--例外-->
+                                                <DataTrigger Binding="{Binding ApplicationStatus}" Value="Faild">
+                                                    <Setter Property="Text" Value="Faild"/>
+                                                    <Setter Property="Background" Value="Firebrick"/>
+                                                    <DataTrigger.EnterActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                                 From="1" To="1" RepeatBehavior="Forever"
                                                                                  AutoReverse="True"/>
                                                             </Storyboard>
                                                         </BeginStoryboard>
@@ -224,15 +279,20 @@
                                     <Button.Style>
                                         <Style TargetType="Button">
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding IsRunning}" Value="True">
-                                                    <Setter Property="Content" Value="Show"/>
-                                                    <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=DataContext.ChangeVisibillityCommand}"/>
-                                                    <Setter Property="CommandParameter" Value="{Binding Id}"/>
-                                                </DataTrigger>
                                                 <DataTrigger Binding="{Binding IsRunning}" Value="False">
                                                     <Setter Property="IsEnabled" Value="False"/>
                                                     <Setter Property="Content" Value="Disable"/>
                                                     <Setter Property="Background" Value="DarkGray"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding CurrentWindowStyle}" Value="Hidden">
+                                                    <Setter Property="Content" Value="Show"/>
+                                                    <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=DataContext.ChangeVisibillityCommand}"/>
+                                                    <Setter Property="CommandParameter" Value="{Binding Id}"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding CurrentWindowStyle}" Value="Normal">
+                                                    <Setter Property="Content" Value="Hide"/>
+                                                    <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=DataContext.ChangeVisibillityCommand}"/>
+                                                    <Setter Property="CommandParameter" Value="{Binding Id}"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>

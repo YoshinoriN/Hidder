@@ -77,7 +77,7 @@
     <Compile Include="Command\DelegateCommand.cs" />
     <Compile Include="Common\WindowStyleChange.cs" />
     <Compile Include="Models\ApplicationProcess.cs" />
-    <Compile Include="Models\RunningStatusEnum.cs" />
+    <Compile Include="Models\ApplicationStatusEnum.cs" />
     <Compile Include="NotifyIcon\NotifyIconWrapper.cs">
       <SubType>Component</SubType>
     </Compile>

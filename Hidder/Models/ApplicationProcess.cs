@@ -31,6 +31,24 @@ namespace Hidder.Models
             private set
             {
                 this._isRunning = value;
+                if(value)
+                {
+                    this.ApplicationStatus = ApplicationStatusEnum.Running;
+                }
+                this.OnPropertyChanged();
+            }
+        }
+
+        private ApplicationStatusEnum _applicationStatus;
+        /// <summary>
+        /// プロセス稼動詳細ステータス
+        /// </summary>
+        public ApplicationStatusEnum ApplicationStatus
+        {
+            get { return this._applicationStatus; }
+            private set
+            {
+                this._applicationStatus = value;
                 this.OnPropertyChanged();
             }
         }
