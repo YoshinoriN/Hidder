@@ -80,7 +80,9 @@
     <Compile Include="NotifyIcon\NotifyIconWrapper.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="NotifyIcon\NotifyIconWrapper.Designer.cs" />
+    <Compile Include="NotifyIcon\NotifyIconWrapper.Designer.cs">
+      <DependentUpon>NotifyIconWrapper.cs</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Common\PropertyChangeNotification.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
@@ -102,7 +104,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="NotifyIcon\NotifyIconWrapper.resx" />
+    <EmbeddedResource Include="NotifyIcon\NotifyIconWrapper.resx">
+      <DependentUpon>NotifyIconWrapper.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

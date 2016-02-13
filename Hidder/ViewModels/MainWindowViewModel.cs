@@ -196,11 +196,15 @@ namespace Hidder.ViewModels
         public ICommand HideAllCommand { get; private set; }
 
         /// <summary>
-        /// 本アプリケーションを含めた全てのアプリケーションを非表示にする。
+        /// 本アプリケーションを含めた全ての実行中アプリケーションを非表示にする。
         /// </summary>
         private void HideAll()
         {
-
+            var applicationProcess = this.ApplicationProcesses.Where(x => x.CurrentWindowStyle
+                                                                       != System.Diagnostics.ProcessWindowStyle.Hidden
+                                                                       && x.ProcessId != "-");
+            applicationProcess.ToList().ForEach(x => x.Hide());
+            this.HideThis();
         }
 
         //View側からWindowのExitメソッドを登録する。

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using Hidder.NotifyIcon;
+using System.Windows;
 
 namespace Hidder.Views
 {
@@ -7,6 +8,8 @@ namespace Hidder.Views
     /// </summary>
     public partial class MainWindow : Window
     {
+        private NotifyIconWrapper notifyIcon;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -18,9 +21,20 @@ namespace Hidder.Views
             ViewModels.MainWindowViewModel _viewModel;
             _viewModel = DataContext as ViewModels.MainWindowViewModel;
             _viewModel.ExitThis = Close;
-
+            _viewModel.HideThis = HideThis;
             //DataContextを差し替える。
             this.DataContext = _viewModel;
+
+            this.notifyIcon = new NotifyIconWrapper(this);
+        }
+
+        /// <summary>
+        /// 自分自身を非表示にする。
+        /// </summary>
+        private void HideThis()
+        {
+            this.WindowState = System.Windows.WindowState.Minimized;
+            this.ShowInTaskbar = false;
         }
 
         //以下はすべてめんどくさいのでコードビハインドでやる。
