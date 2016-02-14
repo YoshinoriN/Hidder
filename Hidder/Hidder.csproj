@@ -73,6 +73,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Behavior\TextBoxBehaviorExtensions.cs" />
     <Compile Include="Behavior\TextBoxBehavior.cs" />
     <Compile Include="Command\DelegateCommand.cs" />
     <Compile Include="Common\WindowStyleChange.cs" />

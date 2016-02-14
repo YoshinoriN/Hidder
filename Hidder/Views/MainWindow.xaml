@@ -78,7 +78,7 @@
             <TextBox Grid.Column="0" Grid.Row="2" Margin="0,5,5,0"
                      Text="{Binding Path, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <i:Interaction.Behaviors>
-                    <Behavior:TextBoxBehavior PlaceHolderText="Please input path."/>
+                    <Behavior:TextBoxBehaviorExtensions PlaceHolderText="Please input path."/>
                 </i:Interaction.Behaviors>
                 <!--パスが存在しない場合...正直Validationほにゃららのほうがよさそう-->
                 <TextBox.Resources>
