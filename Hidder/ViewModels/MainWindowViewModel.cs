@@ -1,5 +1,6 @@
 ﻿using Hidder.Command;
 using Hidder.Common;
+using Microsoft.Win32;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -97,6 +98,7 @@ namespace Hidder.ViewModels
         /// </summary>
         public MainWindowViewModel()
         {
+            this.BrowseCommand = new DelegateCommand(Browse);
             this.AddCommand = new DelegateCommand(Add);
             this.RunCommand = new DelegateCommand<int>(Run);
             this.KillCommand = new DelegateCommand<int>(Kill);
@@ -107,6 +109,22 @@ namespace Hidder.ViewModels
         }
 
         #region "Command関連"
+
+        public ICommand BrowseCommand { get; private set; }
+
+        /// <summary>
+        /// ファイルを開く
+        /// </summary>
+        private void Browse()
+        {
+            var dialog = new OpenFileDialog();
+            dialog.Title = "Open the file";
+            dialog.Filter = "All file(*.*)|*.*";
+            if(dialog.ShowDialog() == true)
+            {
+                this.Path = dialog.FileName;
+            }
+        }
 
         private int _id;
 
