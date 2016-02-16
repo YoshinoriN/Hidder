@@ -1,11 +1,11 @@
 ﻿using Hidder.Command;
-using Hidder.Common;
+using Hidder.Models;
 using Microsoft.Win32;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Input;
 
 namespace Hidder.ViewModels
@@ -133,10 +133,10 @@ namespace Hidder.ViewModels
         /// </summary>
         private void Browse()
         {
-            var dialog = new OpenFileDialog();
+            var dialog = new Microsoft.Win32.OpenFileDialog();
             dialog.Title = "Open the file";
             dialog.Filter = "All file(*.*)|*.*";
-            if(dialog.ShowDialog() == true)
+            if (dialog.ShowDialog() == true)
             {
                 this.Path = dialog.FileName;
             }
@@ -220,6 +220,7 @@ namespace Hidder.ViewModels
             }
         }
 
+        //View側からWindowのHideメソッドを登録する。
         public Action HideThis { get; set; }
 
         public ICommand HideAllCommand { get; private set; }
