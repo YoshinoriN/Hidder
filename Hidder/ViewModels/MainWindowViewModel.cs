@@ -241,5 +241,56 @@ namespace Hidder.ViewModels
         }
 
         #endregion
+
+        #region"リストの保存/復元"
+
+        public ICommand SaveListCommand { get; private set; }
+
+        /// <summary>
+        /// アプリケーションリストの保存
+        /// </summary>
+        private void SaveList()
+        {
+            if (this.Applications.Count == 0)
+            {
+                MessageBox.Show("Some applications doesn't exists on the datagrid.");
+                return;
+            }
+            try
+            {
+                Models.XmlFileSerializer.Serialize(this.Applications, "./AppData/applicationlist.xml");
+                MessageBox.Show("Saved");
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show((string)ex.Message + Environment.NewLine + ex.StackTrace);
+            }
+        }
+
+        public ICommand RestoreListCommand { get; private set; }
+
+        /// <summary>
+        /// アプリケーションリストの復元
+        /// </summary>
+        private void RestoreList()
+        {
+            try
+            {
+                var applications = Models.XmlFileSerializer.Deserialize(this.Applications, "./AppData/applicationlist.xml");
+                foreach (Models.Application application in applications)
+                {
+                    application.Id = this._id;
+                    this.Applications.Add(application);
+                    this._id++;
+                }
+                this.Height = 500;
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show((string)ex.Message + Environment.NewLine + ex.StackTrace);
+            }
+        }
+
+        #endregion
     }
 }

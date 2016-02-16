@@ -81,6 +81,7 @@
     <Compile Include="Command\DelegateCommand.cs" />
     <Compile Include="Common\WindowStyleChange.cs" />
     <Compile Include="Models\ApplicationProcess.cs" />
+    <Compile Include="Common\XmlFileSerializer.cs" />
     <Compile Include="Models\ApplicationStatusEnum.cs" />
     <Compile Include="NotifyIcon\NotifyIconWrapper.cs">
       <SubType>Component</SubType>
@@ -130,6 +131,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="icon64.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="AppData\applicationlist.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
