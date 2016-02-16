@@ -82,13 +82,13 @@ namespace Hidder.ViewModels
             }
         }
 
-        private ObservableCollection<Models.ApplicationProcess> _applicationProcesses = new ObservableCollection<Models.ApplicationProcess>();
-        public ObservableCollection<Models.ApplicationProcess> ApplicationProcesses
+        private ObservableCollection<Models.Application> _applications = new ObservableCollection<Models.Application>();
+        public ObservableCollection<Models.Application> Applications
         {
-            get { return this._applicationProcesses; }
+            get { return this._applications; }
             set
             {
-                this._applicationProcesses = value;
+                this._applications = value;
                 this.OnPropertyChanged();
             }
         }
@@ -137,7 +137,7 @@ namespace Hidder.ViewModels
         /// </summary>
         private void Add()
         {
-            this.ApplicationProcesses.Add(new Models.ApplicationProcess(this._id, this.Path, this.Argument));
+            this.Applications.Add(new Models.Application(this._id, this.AppTitle, this.Path, this.Argument));
             this.Height = 500;
             _id++;
         }
@@ -149,7 +149,7 @@ namespace Hidder.ViewModels
         /// </summary>
         private void Run(int id)
         {
-            var applicationProcess = this.ApplicationProcesses.Where(x => x.Id == id);
+            var applicationProcess = this.Applications.Where(x => x.Id == id);
             applicationProcess.ToList().ForEach(x => x.Start(x.FullPath, x.Argument));
         }
 
@@ -161,8 +161,8 @@ namespace Hidder.ViewModels
         /// <param name="id"></param>
         private void Kill(int id)
         {
-            var applicationProcess = this.ApplicationProcesses.Where(x => x.Id == id);
-            applicationProcess.ToList().ForEach(x => x.Kill());
+            var application = this.Applications.Where(x => x.Id == id);
+            application.ToList().ForEach(x => x.Kill());
         }
 
         public ICommand ChangeVisibillityCommand { get; private set; }
@@ -172,16 +172,16 @@ namespace Hidder.ViewModels
         /// </summary>
         private void ChangeVisibillity(int id)
         {
-            var applicationProcess = this.ApplicationProcesses.Where(x => x.Id == id);
-            foreach (Models.ApplicationProcess appProcess in applicationProcess)
+            var application = this.Applications.Where(x => x.Id == id);
+            foreach (Models.Application app in application)
             {
-                if (appProcess.CurrentWindowStyle == System.Diagnostics.ProcessWindowStyle.Hidden)
+                if (app.CurrentWindowStyle == WindowStyleEnum.Hidden)
                 {
-                    appProcess.Show();
+                    app.Show();
                 }
                 else
                 {
-                    appProcess.Hide();
+                    app.Hide();
                 }
             }
         }
@@ -193,13 +193,12 @@ namespace Hidder.ViewModels
         /// </summary>
         private void Remove(int id)
         {
-            var appProcess = this.ApplicationProcesses.Where(x => x.Id == id);
+            var application = this.Applications.Where(x => x.Id == id);
             //Fixme:このforeach何とかならんのか？
-            foreach (Models.ApplicationProcess process in appProcess)
+            foreach (Models.Application app in application)
             {
-                this.ApplicationProcesses.Remove(process);
-
-                if (this.ApplicationProcesses.Count == 0)
+                this.Applications.Remove(app);
+                if (this.Applications.Count == 0)
                 {
                     this.Height = 200;
                 }
@@ -216,10 +215,10 @@ namespace Hidder.ViewModels
         /// </summary>
         private void HideAll()
         {
-            var applicationProcess = this.ApplicationProcesses.Where(x => x.CurrentWindowStyle
-                                                                       != System.Diagnostics.ProcessWindowStyle.Hidden
-                                                                       && x.ProcessId != "-");
-            applicationProcess.ToList().ForEach(x => x.Hide());
+            var applications = this.Applications.Where(x => x.CurrentWindowStyle
+                                                       != WindowStyleEnum.Hidden
+                                                       && x.ProcessId != "-");
+            applications.ToList().ForEach(x => x.Hide());
             this.HideThis();
         }
 
@@ -233,10 +232,10 @@ namespace Hidder.ViewModels
         /// </summary>
         private void Exit()
         {
-            var isExistsRunningApplication = this.ApplicationProcesses.Any(x => x.CurrentWindowStyle == System.Diagnostics.ProcessWindowStyle.Hidden);
+            var isExistsRunningApplication = this.Applications.Any(x => x.CurrentWindowStyle == WindowStyleEnum.Hidden);
             if (isExistsRunningApplication)
             {
-                MessageBox.Show("Please exit all runnning applications or show all window, if some runnning application are hidden.");
+                MessageBox.Show("Please show all runnning application's window.");
                 return;
             }
             this.ExitThis();
