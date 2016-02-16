@@ -298,7 +298,7 @@
         <Setter Property="SelectionMode" Value="Extended" />
         <Setter Property="SelectionUnit" Value="CellOrRowHeader" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
-        <Setter Property="IsReadOnly" Value="True" />
+        <Setter Property="CanUserAddRows" Value="False" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="AutoGenerateColumns" Value="False" />
         <Setter Property="ClipboardCopyMode" Value="ExcludeHeader" />

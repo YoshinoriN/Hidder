@@ -79,6 +79,7 @@
     <Compile Include="Behavior\TextBoxBehaviorExtensions.cs" />
     <Compile Include="Behavior\TextBoxBehavior.cs" />
     <Compile Include="Command\DelegateCommand.cs" />
+    <Compile Include="Converter\ApplicationInfoConverter.cs" />
     <Compile Include="Models\WindowStyleChange.cs" />
     <Compile Include="Common\XmlFileSerializer.cs" />
     <Compile Include="Models\Application.cs" />

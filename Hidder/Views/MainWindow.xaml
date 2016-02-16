@@ -8,6 +8,7 @@
         mc:Ignorable="d"
         xmlns:Behavior="clr-namespace:Hidder.Behavior"
         xmlns:ViewModels="clr-namespace:Hidder.ViewModels"
+        xmlns:Converter="clr-namespace:Hidder.Converter"
         Height="{Binding Height, Mode=TwoWay}" Width="600"
         WindowStartupLocation="Manual"
         Background="Transparent"
@@ -20,6 +21,10 @@
     <Window.DataContext>
         <ViewModels:MainWindowViewModel/>
     </Window.DataContext>
+
+    <Window.Resources>
+        <Converter:ApplicationInfoConverter x:Key="ApplicationInfoConverter" />
+    </Window.Resources>
 
     <!--ウインドウをメトロ風にする-->
     <WindowChrome.WindowChrome>
@@ -136,120 +141,114 @@
             <!--アプリケーションリスト-->
             <DataGrid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" Margin="0,5,0,5"
                       Height="Auto"
-                      HorizontalAlignment="Stretch"
+                      HorizontalContentAlignment="Center"
+                      VerticalContentAlignment="Center"
+                      ColumnHeaderHeight="25"
                       AutoGenerateColumns="False"
-                      ItemsSource="{Binding ApplicationProcesses}"
+                      ItemsSource="{Binding Applications, Mode=TwoWay}"
                       >
-                <DataGrid.Columns>
 
+                <!--データグリッドのカラム-->
+                <DataGrid.Columns>
+                    <!--タイトル-->
+                    <DataGridTextColumn Header="Title"
+                                        Width="50"
+                                        IsReadOnly="False"
+                                        Binding="{Binding Title}"/>
                     <!--ファイル名-->
-                    <DataGridTextColumn Header="FileName"
-                                        Binding="{Binding FileName}"/>
-                    <!--引数-->
-                    <DataGridTextColumn Header="Argument"
-                                        Binding="{Binding Argument}"/>
-                    <!--プロセスID-->
-                    <DataGridTextColumn Header="ProcessId"
-                                        Binding="{Binding ProcessId}"/>
-                    <!--現在のウインドウの状況-->
-                    <DataGridTextColumn Header="Window State"
-                                        Binding="{Binding CurrentWindowStyle}"/>
-                    <!--稼動状況-->
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.HeaderTemplate>
                             <DataTemplate>
-                                <TextBlock Text="Status"/>
+                                <TextBlock Text="FileName" />
                             </DataTemplate>
                         </DataGridTemplateColumn.HeaderTemplate>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock TextAlignment="Center" Padding="5,5,5,5" Width="80">
+                                <TextBlock TextAlignment="Center" Padding="0,5,0,5" Width="80" Text="{Binding FileName}">
+                                    <TextBlock.ToolTip>
+                                        <MultiBinding Converter="{StaticResource ApplicationInfoConverter}" UpdateSourceTrigger="PropertyChanged">
+                                            <MultiBinding.Bindings>
+                                                <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=DataGridRow}"/>
+                                            </MultiBinding.Bindings>
+                                        </MultiBinding>
+                                    </TextBlock.ToolTip>
+                                </TextBlock>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    
+                    <!--引数-->
+                    <DataGridTextColumn Header="Argument"
+                                        Width="50"
+                                        IsReadOnly="False"
+                                        Binding="{Binding Argument}"/>
+                    <!--プロセスID-->
+                    <DataGridTextColumn Header="ProcessId"
+                                        Width="50"
+                                        IsReadOnly="True"
+                                        Binding="{Binding ProcessId}"/>
+                    <!--現在のウインドウの状況-->
+                    <DataGridTextColumn Header="Window"
+                                        Width="50"
+                                        IsReadOnly="True"
+                                        Binding="{Binding CurrentWindowStyle}"/>
+
+                    <!--稼動状況-->
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="Status" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.HeaderTemplate>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Center" Padding="5,5,5,5" Width="70">
                                     <TextBlock.Style>
                                         <Style TargetType="TextBlock">
+                                            <Setter Property="Text" Value="{Binding ApplicationStatus}"/>
                                             <Style.Triggers>
-                                                <!--待機-->
-                                                <DataTrigger Binding="{Binding ApplicationStatus}" Value="Ready">
-                                                    <Setter Property="Text" Value="Ready"/>
-                                                    <Setter Property="Background" Value="DarkGreen"/>
+                                                <!--稼動時の点滅ストーリーボード-->
+                                                <DataTrigger Binding="{Binding IsRunning}" Value="True">
                                                     <DataTrigger.EnterActions>
-                                                        <BeginStoryboard>
+                                                        <BeginStoryboard x:Name="statusMoveAnimation">
                                                             <Storyboard>
                                                                 <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                                                                 From="1" To="1" RepeatBehavior="Forever"
-                                                                                 AutoReverse="True"/>
+                                                                                 From="0.5" To="1"
+                                                                                 RepeatBehavior="Forever" AutoReverse="True"
+                                                                                 />
                                                             </Storyboard>
                                                         </BeginStoryboard>
                                                     </DataTrigger.EnterActions>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding IsRunning}" Value="False">
+                                                    <DataTrigger.EnterActions>
+                                                        <StopStoryboard BeginStoryboardName="statusMoveAnimation"/>
+                                                    </DataTrigger.EnterActions>
+                                                </DataTrigger>
+
+                                                <!--待機-->
+                                                <DataTrigger Binding="{Binding ApplicationStatus}" Value="Ready">
+                                                    <Setter Property="Background" Value="DarkGreen"/>
                                                 </DataTrigger>
                                                 <!--開始中-->
                                                 <DataTrigger Binding="{Binding ApplicationStatus}" Value="Starting">
-                                                    <Setter Property="Text" Value="Starting"/>
                                                     <Setter Property="Background" Value="Orange"/>
-                                                    <DataTrigger.EnterActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                                                                 From="0.5" To="1" RepeatBehavior="Forever"
-                                                                                 AutoReverse="True"/>
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </DataTrigger.EnterActions>
                                                 </DataTrigger>
                                                 <!--稼動中-->
                                                 <DataTrigger Binding="{Binding ApplicationStatus}" Value="Running">
-                                                    <Setter Property="Text" Value="Running"/>
                                                     <Setter Property="Background" Value="DodgerBlue"/>
-                                                    <DataTrigger.EnterActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                                                                 From="0.5" To="1" RepeatBehavior="Forever"
-                                                                                 AutoReverse="True"/>
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </DataTrigger.EnterActions>
                                                 </DataTrigger>
                                                 <!--停止中-->
                                                 <DataTrigger Binding="{Binding ApplicationStatus}" Value="Stopping">
-                                                    <Setter Property="Text" Value="Stopping"/>
                                                     <Setter Property="Background" Value="Orange"/>
-                                                    <DataTrigger.EnterActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                                                                 From="0.5" To="1" RepeatBehavior="Forever"
-                                                                                 AutoReverse="True"/>
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </DataTrigger.EnterActions>
                                                 </DataTrigger>
                                                 <!--存在せず-->
                                                 <DataTrigger Binding="{Binding ApplicationStatus}" Value="DoesntExist">
-                                                    <Setter Property="Text" Value="Doesn'tExist"/>
                                                     <Setter Property="Background" Value="Firebrick"/>
-                                                    <DataTrigger.EnterActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                                                                 From="1" To="1" RepeatBehavior="Forever"
-                                                                                 AutoReverse="True"/>
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </DataTrigger.EnterActions>
                                                 </DataTrigger>
                                                 <!--例外-->
                                                 <DataTrigger Binding="{Binding ApplicationStatus}" Value="Faild">
-                                                    <Setter Property="Text" Value="Faild"/>
                                                     <Setter Property="Background" Value="Firebrick"/>
-                                                    <DataTrigger.EnterActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                                                                 From="1" To="1" RepeatBehavior="Forever"
-                                                                                 AutoReverse="True"/>
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </DataTrigger.EnterActions>
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
@@ -260,10 +259,10 @@
                     </DataGridTemplateColumn>
 
                     <!--停止/再起動ボタン-->
-                    <DataGridTemplateColumn Header="Run/Kill">
+                    <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Width="80">
+                                <Button Width="60">
                                     <Button.Style>
                                         <Style TargetType="Button">
                                             <Style.Triggers>
@@ -286,10 +285,10 @@
                     </DataGridTemplateColumn>
 
                     <!--表示/非表示ボタン-->
-                    <DataGridTemplateColumn Header="Show/Hidden">
+                    <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Width="80">
+                                <Button Width="60">
                                     <Button.Style>
                                         <Style TargetType="Button">
                                             <Style.Triggers>
@@ -317,10 +316,10 @@
                     </DataGridTemplateColumn>
 
                     <!--行削除ボタン-->
-                    <DataGridTemplateColumn Header="Remove">
+                    <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Width="80">
+                                <Button Width="60">
                                     <Button.Style>
                                         <Style TargetType="Button">
                                             <Style.Triggers>
@@ -343,6 +342,11 @@
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
+
+            <!--情報-->
+            <TextBlock Grid.Column="0" Grid.Row="6" Margin="5,5,5,0" HorizontalAlignment="Left"
+                       Text="Display tooltip when mouse over on filename's cell."
+                       />
 
             <!--本アプリケーションも含めた全てのアプリケーションを非表示-->
             <Button Grid.Column="0" Grid.Row="6" Margin="5,5,5,0" HorizontalAlignment="Right" Content="Hide All"
