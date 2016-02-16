@@ -2,9 +2,9 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace Hidder.Models
+namespace Hidder.ViewModels
 {
-    public class PropertyChangeNotification : DispatcherObject, INotifyPropertyChanged
+    public class ViewModelsBase : DispatcherObject, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
