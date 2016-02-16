@@ -106,6 +106,8 @@ namespace Hidder.ViewModels
             this.ChangeVisibillityCommand = new DelegateCommand<int>(ChangeVisibillity);
             this.HideAllCommand = new DelegateCommand(HideAll);
             this.ExitCommand = new DelegateCommand(Exit);
+            this.SaveListCommand = new DelegateCommand(SaveList);
+            this.RestoreListCommand = new DelegateCommand(RestoreList);
         }
 
         #region "Command関連"
