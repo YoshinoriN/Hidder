@@ -44,6 +44,7 @@
                 <RowDefinition Height="23"/>
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
@@ -57,7 +58,7 @@
 
             <!--タイトルと最小化ボタン-->
             <Grid Grid.Column="0" Grid.ColumnSpan="7" Grid.Row="0">
-                <TextBlock x:Name="title" Text="{Binding Title}" Margin="0,0,0,0"  
+                <TextBlock x:Name="title" Text="{Binding WindowTitle}" Margin="0,0,0,0"  
                            Foreground="{StaticResource StandardForeGroundColor}"
                            FontSize="14" FontFamily="Segoe UI"
                            />
@@ -78,7 +79,16 @@
                 <MenuItem x:Name="About"  Header="About" Click="About_Click"/>
             </Menu>
 
+            <!--任意で付けるタイトル-->
             <TextBox Grid.Column="0" Grid.Row="2" Margin="0,5,5,0"
+                     Text="{Binding AppTitle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <i:Interaction.Behaviors>
+                    <Behavior:TextBoxBehavior PlaceHolderText="Any:Please input a title for application, if you need."/>
+                </i:Interaction.Behaviors>
+            </TextBox>
+
+            <!--実行するプログラムのパス-->
+            <TextBox Grid.Column="0" Grid.Row="3" Margin="0,5,5,0"
                      Text="{Binding Path, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <i:Interaction.Behaviors>
                     <Behavior:TextBoxBehaviorExtensions PlaceHolderText="Please input path."/>
@@ -97,11 +107,11 @@
             </TextBox>
 
             <!--参照ボタン-->
-            <Button Grid.Column="1" Grid.Row="2" Content="Browse" Height="25"
+            <Button Grid.Column="1" Grid.Row="3" Content="Browse" Height="25"
                     Command="{Binding BrowseCommand}"/>
 
             <!--引数入力-->
-            <TextBox Grid.Column="0" Grid.Row="3" Margin="0,5,5,0"
+            <TextBox Grid.Column="0" Grid.Row="4" Margin="0,5,5,0"
                      Text="{Binding Argument, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <i:Interaction.Behaviors>
                     <Behavior:TextBoxBehavior PlaceHolderText="Please input Argument."/>
@@ -109,7 +119,7 @@
             </TextBox>
 
             <!--アプリケーションの追加-->
-            <Button Grid.Column="1" Grid.Row="3" Height="25"
+            <Button Grid.Column="1" Grid.Row="4" Height="25"
                     Content="Add"
                     Command="{Binding AddCommand}">
                 <Button.Resources>
@@ -124,7 +134,7 @@
             </Button>
 
             <!--アプリケーションリスト-->
-            <DataGrid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" Margin="0,5,0,5"
+            <DataGrid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" Margin="0,5,0,5"
                       Height="Auto"
                       HorizontalAlignment="Stretch"
                       AutoGenerateColumns="False"
@@ -335,12 +345,12 @@
             </DataGrid>
 
             <!--本アプリケーションも含めた全てのアプリケーションを非表示-->
-            <Button Grid.Column="0" Grid.Row="5" Margin="5,5,5,0" HorizontalAlignment="Right" Content="Hide All"
+            <Button Grid.Column="0" Grid.Row="6" Margin="5,5,5,0" HorizontalAlignment="Right" Content="Hide All"
                     Command="{Binding HideAllCommand}"
                     />
 
             <!--終了ボタン-->
-            <Button Grid.Column="1" Grid.Row="5" Margin="5,5,5,0" Content="Exit"
+            <Button Grid.Column="1" Grid.Row="6" Margin="5,5,5,0" Content="Exit"
                     Command="{Binding ExitCommand}"
                     />
 

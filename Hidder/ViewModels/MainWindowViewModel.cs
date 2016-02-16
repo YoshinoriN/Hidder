@@ -13,10 +13,10 @@ namespace Hidder.ViewModels
     public class MainWindowViewModel : PropertyChangeNotification
     {
         //ファイル名とバージョン表示
-        public string Title { get; private set; } = System.IO.Path.GetFileNameWithoutExtension(@System.Reflection.Assembly.GetExecutingAssembly().Location) + " " +
+        public string WindowTitle { get; private set; } = System.IO.Path.GetFileNameWithoutExtension(@System.Reflection.Assembly.GetExecutingAssembly().Location) + " " +
             System.Diagnostics.FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).ProductVersion.ToString();
 
-        private double _height = 200;
+        private double _height = 230;
         /// <summary>
         /// ウィンドウの高さ
         /// </summary>
@@ -26,6 +26,20 @@ namespace Hidder.ViewModels
             set
             {
                 this._height = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        private string _appTitle;
+        /// <summary>
+        /// 実行アプリケーションに付けるタイトル
+        /// </summary>
+        public string AppTitle
+        {
+            get { return this._appTitle; }
+            set
+            {
+                this._appTitle = value;
                 this.OnPropertyChanged();
             }
         }
@@ -200,7 +214,7 @@ namespace Hidder.ViewModels
                 this.Applications.Remove(app);
                 if (this.Applications.Count == 0)
                 {
-                    this.Height = 200;
+                    this.Height = 230;
                 }
                 return;
             }
