@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
-namespace Hidder.Common
+namespace Hidder.Models
 {
     /// <summary>
     /// 実行中プロセスのウインドウサイズを変更するクラス。
@@ -17,10 +17,10 @@ namespace Hidder.Common
         /// </summary>
         /// <param name="process">対象のプロセス</param>
         /// <returns>ProcessWindowStyle.Hidden</returns>
-        public static ProcessWindowStyle Hide(this System.Diagnostics.Process process)
+        public static WindowStyleEnum Hide(this System.Diagnostics.Process process)
         {
             ShowWindow(process.MainWindowHandle, 0);
-            return ProcessWindowStyle.Hidden;
+            return WindowStyleEnum.Hidden;
         }
 
         /// <summary>
@@ -28,10 +28,10 @@ namespace Hidder.Common
         /// </summary>
         /// <param name="process">対象のプロセス</param>
         /// <returns>ProcessWindowStyle.Hidden</returns>
-        public static ProcessWindowStyle Normal(this System.Diagnostics.Process process)
+        public static WindowStyleEnum Normal(this System.Diagnostics.Process process)
         {
             ShowWindow(process.MainWindowHandle, 1);
-            return ProcessWindowStyle.Normal;
+            return WindowStyleEnum.Normal;
         }
     }
 }
