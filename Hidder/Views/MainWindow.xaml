@@ -55,12 +55,6 @@
                 <Style BasedOn="{StaticResource TextBlockStyle}" TargetType="TextBlock"/>
             </Grid.Resources>
 
-            <!--メニュー-->
-            <Menu Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Margin="0,0,0,0" VerticalAlignment="Center" Padding="0,2,0,2">
-                <MenuItem x:Name="Settings" Header="Setting" Click="Settings_Click"/>
-                <MenuItem x:Name="About"  Header="About" Click="About_Click"/>
-            </Menu>
-
             <!--タイトルと最小化ボタン-->
             <Grid Grid.Column="0" Grid.ColumnSpan="7" Grid.Row="0">
                 <TextBlock x:Name="title" Text="{Binding Title}" Margin="0,0,0,0"  
@@ -74,7 +68,16 @@
                 </StackPanel>
             </Grid>
 
-            <!--実行するプログラムのパス-->
+            <!--メニュー-->
+            <Menu Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Margin="0,0,0,0" VerticalAlignment="Center" Padding="0,2,0,2">
+                <MenuItem x:Name="File" Header="File">
+                    <MenuItem Header="Save application list." Command="{Binding SaveListCommand}"/>
+                    <MenuItem Header="Restore application list." Command="{Binding RestoreListCommand}"/>
+                </MenuItem>
+                <MenuItem x:Name="Settings" Header="Setting" Click="Settings_Click"/>
+                <MenuItem x:Name="About"  Header="About" Click="About_Click"/>
+            </Menu>
+
             <TextBox Grid.Column="0" Grid.Row="2" Margin="0,5,5,0"
                      Text="{Binding Path, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <i:Interaction.Behaviors>
