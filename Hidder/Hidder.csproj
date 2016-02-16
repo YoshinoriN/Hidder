@@ -79,10 +79,12 @@
     <Compile Include="Behavior\TextBoxBehaviorExtensions.cs" />
     <Compile Include="Behavior\TextBoxBehavior.cs" />
     <Compile Include="Command\DelegateCommand.cs" />
-    <Compile Include="Common\WindowStyleChange.cs" />
-    <Compile Include="Models\ApplicationProcess.cs" />
+    <Compile Include="Models\WindowStyleChange.cs" />
     <Compile Include="Common\XmlFileSerializer.cs" />
+    <Compile Include="Models\Application.cs" />
     <Compile Include="Models\ApplicationStatusEnum.cs" />
+    <Compile Include="Models\ApplicationUiType.cs" />
+    <Compile Include="Models\WindowStyleEnum.cs" />
     <Compile Include="NotifyIcon\NotifyIconWrapper.cs">
       <SubType>Component</SubType>
     </Compile>
