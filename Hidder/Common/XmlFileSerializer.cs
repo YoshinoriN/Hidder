@@ -35,7 +35,6 @@ namespace Hidder.Models
         {
             if (!System.IO.File.Exists(path))
             {
-                MessageBox.Show("Couldn't find the file.");
                 return null;
             }
 

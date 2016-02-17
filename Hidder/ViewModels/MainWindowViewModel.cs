@@ -293,6 +293,12 @@ namespace Hidder.ViewModels
             try
             {
                 var applications = Models.XmlFileSerializer.Deserialize(this.Applications, "./AppData/applicationlist.xml");
+                if (applications == null)
+                {
+                    MessageBox.Show("Couldn't find the file.");
+                    return;
+                }
+
                 foreach (Models.Application application in applications)
                 {
                     application.Id = this._id;
