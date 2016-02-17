@@ -8,7 +8,9 @@
         mc:Ignorable="d"
         xmlns:Behavior="clr-namespace:Hidder.Behavior"
         xmlns:ViewModels="clr-namespace:Hidder.ViewModels"
+        xmlns:Models="clr-namespace:Hidder.Models"
         xmlns:Converter="clr-namespace:Hidder.Converter"
+        xmlns:Properties="clr-namespace:Hidder.Properties"
         Height="{Binding Height, Mode=TwoWay}" Width="600"
         WindowStartupLocation="Manual"
         Background="Transparent"
@@ -76,12 +78,21 @@
 
             <!--メニュー-->
             <Menu Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Margin="0,0,0,0" VerticalAlignment="Center" Padding="0,2,0,2">
-                <MenuItem x:Name="File" Header="File">
-                    <MenuItem Header="Save application list." Command="{Binding SaveListCommand}"/>
-                    <MenuItem Header="Restore application list." Command="{Binding RestoreListCommand}"/>
+                <MenuItem Header="{Binding Source={x:Static Models:ResourceService.CurrentResourceService}, 
+                                           Path=Resources.Menu_File, Mode=OneWay}">
+                    <MenuItem Header="{Binding Source={x:Static Models:ResourceService.CurrentResourceService}, 
+                                               Path=Resources.Menu_SaveList, Mode=OneWay}" 
+                              Command="{Binding SaveListCommand}"/>
+                    <MenuItem Header="{Binding Source={x:Static Models:ResourceService.CurrentResourceService}, 
+                                               Path=Resources.Menu_RestoreList, Mode=OneWay}"                         
+                              Command="{Binding RestoreListCommand}"/>
                 </MenuItem>
-                <MenuItem x:Name="Settings" Header="Setting" Click="Settings_Click"/>
-                <MenuItem x:Name="About"  Header="About" Click="About_Click"/>
+                <MenuItem Header="{Binding Source={x:Static Models:ResourceService.CurrentResourceService}, 
+                                           Path=Resources.Menu_Setting, Mode=OneWay}"
+                          Click="Settings_Click"/>
+                <MenuItem Header="{Binding Source={x:Static Models:ResourceService.CurrentResourceService}, 
+                                           Path=Resources.Menu_About, Mode=OneWay}"
+                          Click="About_Click"/>
             </Menu>
 
             <!--任意で付けるタイトル-->
