@@ -118,66 +118,66 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Button_Add" xml:space="preserve">
-    <value>Add</value>
+    <value>追加</value>
   </data>
   <data name="Button_Browse" xml:space="preserve">
-    <value>Browse</value>
+    <value>参照</value>
   </data>
   <data name="Button_Exit" xml:space="preserve">
-    <value>Exit</value>
+    <value>終了</value>
   </data>
   <data name="Button_HideAll" xml:space="preserve">
-    <value>Hide All</value>
+    <value>全非表示</value>
   </data>
   <data name="Menu_About" xml:space="preserve">
-    <value>About</value>
+    <value>その他</value>
   </data>
   <data name="Menu_File" xml:space="preserve">
-    <value>File</value>
+    <value>ファイル</value>
   </data>
   <data name="Menu_RestoreList" xml:space="preserve">
-    <value>Restore application list.</value>
+    <value>リストの復元</value>
   </data>
   <data name="Menu_SaveList" xml:space="preserve">
-    <value>Save application list.</value>
+    <value>リストの保存</value>
   </data>
   <data name="Menu_Setting" xml:space="preserve">
-    <value>Setting</value>
+    <value>設定</value>
   </data>
   <data name="Msg_App_Kill_Content" xml:space="preserve">
-    <value>Do you really want to kill it process force ?</value>
+    <value>対象アプリケーションのプロセスを強制終了しますがよろしいですか？</value>
   </data>
   <data name="Msg_App_Kill_Title" xml:space="preserve">
-    <value>Warning.</value>
+    <value>警告</value>
   </data>
   <data name="Msg_Copyright" xml:space="preserve">
     <value>Copyright YoshinoriN 2016 All Right Reserved.</value>
   </data>
   <data name="Msg_Exit_Error" xml:space="preserve">
-    <value>Please show all runnning application's window.</value>
+    <value>実行中アプリケーションを全て表示してください。</value>
   </data>
   <data name="Msg_GuiApp_Kill_Content" xml:space="preserve">
-    <value>The GUI application rejected exit message. Do you really want to kill GUI application force ?</value>
+    <value>対象GUIアプリケーションは終了要求を受付ませんでした。本当に強制終了してもよいですか？</value>
   </data>
   <data name="Msg_GuiApp_Kill_Title" xml:space="preserve">
-    <value>Warning.</value>
+    <value>警告</value>
   </data>
   <data name="Msg_Restore_Nothing" xml:space="preserve">
-    <value>Couldn't find the application's list.</value>
+    <value>復元するリストが見つかりませんでした。</value>
   </data>
   <data name="Msg_Save_Complete" xml:space="preserve">
-    <value>Saved.</value>
+    <value>保存しました。</value>
   </data>
   <data name="Msg_Save_Nothing" xml:space="preserve">
-    <value>Any applications doesn't exists on the datagrid.</value>
+    <value>保存対象が存在しません。</value>
   </data>
   <data name="Placeholder_Argument" xml:space="preserve">
-    <value>Opt. : Please input argument.</value>
+    <value>任意入力 : 引数</value>
   </data>
   <data name="Placeholder_Path" xml:space="preserve">
-    <value>Imp. : Please input pplication path.</value>
+    <value>必須入力 : 実行アプリケーションもしくはファイルのパス</value>
   </data>
   <data name="Placeholder_Title" xml:space="preserve">
-    <value>Opt. : Please input application title.</value>
+    <value>任意入力 : アプリケーションに付けるタイトル</value>
   </data>
 </root>

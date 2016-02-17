@@ -80,6 +80,7 @@
     <Compile Include="Behavior\TextBoxBehavior.cs" />
     <Compile Include="Command\DelegateCommand.cs" />
     <Compile Include="Converter\ApplicationInfoConverter.cs" />
+    <Compile Include="Models\ResourceService.cs" />
     <Compile Include="Models\WindowStyleChange.cs" />
     <Compile Include="Common\XmlFileSerializer.cs" />
     <Compile Include="Models\Application.cs" />
@@ -91,6 +92,11 @@
     </Compile>
     <Compile Include="NotifyIcon\NotifyIconWrapper.Designer.cs">
       <DependentUpon>NotifyIconWrapper.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resource.ja-JP.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.ja-JP.resx</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Common\PropertyChangeNotification.cs" />
@@ -117,8 +123,12 @@
       <DependentUpon>NotifyIconWrapper.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resource.ja-JP.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.ja-JP.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -22,7 +22,7 @@ namespace Hidder.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Hidder.Properties {
         ///   このクラスで使用されているキャッシュされた ResourceManager インスタンスを返します。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Hidder.Properties.Resources", typeof(Resources).Assembly);
@@ -51,12 +51,201 @@ namespace Hidder.Properties {
         ///   現在のスレッドの CurrentUICulture プロパティをオーバーライドします。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Add に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Button_Add {
+            get {
+                return ResourceManager.GetString("Button_Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Browse に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Button_Browse {
+            get {
+                return ResourceManager.GetString("Button_Browse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Exit に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Button_Exit {
+            get {
+                return ResourceManager.GetString("Button_Exit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Hide All に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Button_HideAll {
+            get {
+                return ResourceManager.GetString("Button_HideAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   About に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Menu_About {
+            get {
+                return ResourceManager.GetString("Menu_About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   File に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Menu_File {
+            get {
+                return ResourceManager.GetString("Menu_File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Restore application list. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Menu_RestoreList {
+            get {
+                return ResourceManager.GetString("Menu_RestoreList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Save application list. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Menu_SaveList {
+            get {
+                return ResourceManager.GetString("Menu_SaveList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Setting に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Menu_Setting {
+            get {
+                return ResourceManager.GetString("Menu_Setting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Do you really want to kill it process force ? に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Msg_App_Kill_Content {
+            get {
+                return ResourceManager.GetString("Msg_App_Kill_Content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Warning. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Msg_App_Kill_Title {
+            get {
+                return ResourceManager.GetString("Msg_App_Kill_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Copyright YoshinoriN 2016 All Right Reserved. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Msg_Copyright {
+            get {
+                return ResourceManager.GetString("Msg_Copyright", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Please show all runnning application&apos;s window. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Msg_Exit_Error {
+            get {
+                return ResourceManager.GetString("Msg_Exit_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   The GUI application rejected exit message. Do you really want to kill GUI application force ? に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Msg_GuiApp_Kill_Content {
+            get {
+                return ResourceManager.GetString("Msg_GuiApp_Kill_Content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Warning. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Msg_GuiApp_Kill_Title {
+            get {
+                return ResourceManager.GetString("Msg_GuiApp_Kill_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Couldn&apos;t find the application&apos;s list. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Msg_Restore_Nothing {
+            get {
+                return ResourceManager.GetString("Msg_Restore_Nothing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Saved. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Msg_Save_Complete {
+            get {
+                return ResourceManager.GetString("Msg_Save_Complete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Any applications doesn&apos;t exists on the datagrid. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Msg_Save_Nothing {
+            get {
+                return ResourceManager.GetString("Msg_Save_Nothing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Opt. : Please input argument. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Placeholder_Argument {
+            get {
+                return ResourceManager.GetString("Placeholder_Argument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Imp. : Please input pplication path. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Placeholder_Path {
+            get {
+                return ResourceManager.GetString("Placeholder_Path", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Opt. : Please input application title. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Placeholder_Title {
+            get {
+                return ResourceManager.GetString("Placeholder_Title", resourceCulture);
             }
         }
     }
